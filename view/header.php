@@ -37,7 +37,7 @@
                           <ul class="nav nav-tabs">
                               <li><a href="/">Hotel</a></li>
                               <li><a href="/user">Buchungen</a></li>
-                              <li><a href="/user/create">Login</a></li>
+                              <li><a href="/user/login">Login</a></li>
                           </ul>
                       </div><!--/.nav-collapse -->
                   </div>

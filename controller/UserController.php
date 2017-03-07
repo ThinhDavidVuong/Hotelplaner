@@ -1,6 +1,7 @@
 <?php
 
 require_once '../repository/UserRepository.php';
+require_once '../repository/SexRepository.php';
 
 /**
  * Siehe Dokumentation im DefaultController.
@@ -18,29 +19,61 @@ class UserController
         $view->display();
     }
 
-    public function create()
+    public function registery()
     {
-        $view = new View('user_create');
-        $view->title = 'Benutzer erstellen';
-        $view->heading = 'Benutzer erstellen';
+        $sexRepo = new SexRepository();
+        $sexEntries = $sexRepo->readAll();
+
+        $sexarray = array();
+        foreach ($sexEntries as $sex)
+        {
+            $sexarray[] = $sex->sex;
+        }
+
+        $view = new View('user_registery');
+        $view->title = 'Registrieren';
+        $view->heading = 'Registrieren';
+        $view->sexarray = $sexarray;
         $view->display();
+    }
+
+    public function login()
+    {
+      $view = new View('user_login');
+      $view->title = 'Login';
+      $view->heading = 'Login';
+      $view->display();
     }
 
     public function doCreate()
     {
+
         if ($_POST['send']) {
+            $sex = $_POST['sex'];
             $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
+            $name = $_POST['name'];
             $email = $_POST['email'];
-            // $password  = $_POST['password'];
-            $password = 'no_password';
+            $password  = $_POST['password'];
+            $passwordrepeat = $_POST['passwordrepeat'];
+
+            $sexRepo = new SexRepository();
+            $sex_id = $sexRepo->getNameById($sex);
 
             $userRepository = new UserRepository();
-            $userRepository->create($firstName, $lastName, $email, $password);
+            $userRepository->create($sex_id, $firstName, $name, $email, $password);
         }
 
         // Anfrage an die URI /user weiterleiten (HTTP 302)
         header('Location: /user');
+    }
+
+    public funktion dologin()
+    {
+      if ($_POST['send']){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        
+      }
     }
 
     public function delete()
