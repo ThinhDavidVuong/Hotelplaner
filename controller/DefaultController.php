@@ -1,5 +1,7 @@
 <?php
 
+require_once '../repository/HotelRepository.php';
+
 /**
  * Der Controller ist der Ort an dem es für jede Seite, welche der Benutzer
  * anfordern kann eine Methode gibt, welche die dazugehörende Businesslogik
@@ -39,6 +41,12 @@ class DefaultController
         $view = new View('default_index');
         $view->title = 'Startseite';
         $view->heading = 'Startseite';
+
+        $hotelRepo = new HotelRepository();
+
+        $hotels = $hotelRepo->readAllWithProperties();
+        $view->hotels = $hotels;
+
         $view->display();
     }
 }
