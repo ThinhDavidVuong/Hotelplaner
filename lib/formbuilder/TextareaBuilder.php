@@ -1,20 +1,21 @@
 <?php
 
-class PasswordBuilder extends Builder
+class textareaBuilder extends Builder
 {
     public function __construct()
     {
         $this->addProperty('label');
         $this->addProperty('name');
-        $this->addProperty('value', null);
     }
 
     public function build()
     {
         $result = '<div class="form-group">';
         $result .= "    <label class=\"col-md-2 control-label\" for=\"textinput\">{$this->label}</label>";
+        $result .= "    <br/>";
         $result .= '    <div class="col-md-4">';
-        $result .= "        <input name=\"{$this->name}\" type=\"password\" value=\"{$this->value}\" pattern=\".{3,}\" oninvalid=\"setCustomValidity('Das Passwort muss mindestens 8 Zeichen lang sein.')\" class=\"form-control input-md\" required>";
+        $result .= "        <textarea name=\"{$this->name}\" class=\"form-control input-md commentarea\" required>";
+        $result .= "        </textarea>";
         $result .= '    </div>';
         $result .= '</div>';
 

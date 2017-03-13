@@ -15,7 +15,6 @@ class DropdownBuilder extends Builder
         $result .= "    <label class=\"col-md-2 control-label\" for=\"textinput\">{$this->label}</label>";
         $result .= '    <div class="col-md-4">';
         $result .= "      <select name=\"{$this->name}\">";
-        $result .= "        <option value=\"emty\"></option>";
         foreach ($this->options as $option) {
           $result .="         <option value=\"$option\">$option</option>";
         }

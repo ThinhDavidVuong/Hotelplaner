@@ -1,6 +1,7 @@
 <?php
 
 require_once '../repository/HotelRepository.php';
+require_once '../repository/CommentRepository.php';
 
 /**
  * Der Controller ist der Ort an dem es für jede Seite, welche der Benutzer
@@ -70,5 +71,22 @@ class HotelController
         } else {
             header("Location: /");
         }
+    }
+
+    public function showcomments() {
+      $hotelRepo = new HotelRepository();
+      $hotel = $hotelRepo->readById($_GET['hotel']);
+
+      $commentRepo = new CommentRepository();
+      $allComants = $commentRepo->readByHotelid($_GET['hotel']);
+
+
+      $view = new View('comment');
+      $view->title = 'Kommentare';
+      $view->heading = 'Kommentare';
+      $view->hotel = $hotel;
+      $view->comments = $allComants;
+      $view->display();
+
     }
 }

@@ -6,10 +6,7 @@
             <div id="info" class="left">
                 <h3 name="hotelname"> <?= $hotel->name; ?> </h3><br>
                 <p name="stars"> <?php for ($x = 0; $x < $hotel->stars; $x++) : ?>&#9733<?php endfor; ?> </p><br>
-              <?php if (isset($_SESSION['Userid'])) {
-                  echo "<a href=\"/hotel/reserve?hotel=$hotel->id\" class=\"btn btn-info\">Buchen</a>";
-                }  ?>
-                <a href="/hotel/showcomments?hotel=<?= $hotel->id ?>" class="btn btn-info">Kommentare</a>
+                <a href="/comment/rate?hotel=<?= $hotel->id ?>" class="btn btn-info">Bewerten</a>
             </div>
 
             <div class="right">

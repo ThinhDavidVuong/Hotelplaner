@@ -8,3 +8,5 @@ require_once 'PasswordBuilder.php';
 require_once 'DropdownBuilder.php';
 require_once 'LinkbuttonBuilder.php';
 require_once 'FaultBuilder.php';
+require_once 'EmailBuilder.php';
+require_once 'TextareaBuilder.php';
