@@ -7,3 +7,4 @@ require_once 'SubmitBuilder.php';
 require_once 'PasswordBuilder.php';
 require_once 'DropdownBuilder.php';
 require_once 'LinkbuttonBuilder.php';
+require_once 'FaultBuilder.php';

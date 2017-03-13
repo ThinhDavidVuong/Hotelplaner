@@ -1,8 +1,8 @@
 <?php
 
-$form = new Form('/user/doCreate');
+$form = new Form('/user/dologin');
 
-
+echo $form->fault()->message($fault);
 echo $form->text()->label('Mail')->name('email');
 echo $form->password()->label('Password')->name('password');
 echo $form->submit()->label('Login')->name('send');

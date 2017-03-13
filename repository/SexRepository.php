@@ -18,7 +18,7 @@ class SexRepository extends Repository
     public function getIdByName($sex)
     {
 
-        $query = "SELECT id FROM $this->tableName WHERE name= ?";
+        $query = "SELECT id FROM {$this->tableName} WHERE sex=?";
 
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->bind_param('s', $sex);
@@ -29,6 +29,14 @@ class SexRepository extends Repository
           throw new Exception($statement->error);
         }
 
-        return $resault->fetch_array();
+        //return $resault->fetch_array();
+        // Ersten Datensatz aus dem Reultat holen
+        $row = $result->fetch_object();
+
+        // Datenbankressourcen wieder freigeben
+        $result->close();
+
+        // Den gefundenen Datensatz zurückgeben
+        return $row;
     }
 }

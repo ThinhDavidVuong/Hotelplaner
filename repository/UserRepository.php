@@ -43,4 +43,40 @@ class UserRepository extends Repository
 
         return $statement->insert_id;
     }
+
+    public function check($email, $password)
+    {
+      $password_hash = sha1($password);
+
+      $query = "SELECT * FROM $this->tableName WHERE email=?";
+
+      $statement = ConnectionHandler::getConnection()->prepare($query);
+      $statement->bind_param('s', $email);
+
+      if (!$statement->execute()) {
+          throw new Exception($statement->error);
+      }
+
+      // Resultat der Abfrage holen
+      $result = $statement->get_result();
+      if (!$result) {
+          throw new Exception($statement->error);
+      }
+
+      // Ersten Datensatz aus dem Reultat holen
+      $row = $result->fetch_object();
+
+      // Datenbankressourcen wieder freigeben
+      $result->close();
+
+      if (isset($row)){
+        if ($password_hash == $row->password)
+        {
+          return True;
+        } else {
+          return False;
+        }
+    }
+
+    }
 }
