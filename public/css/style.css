@@ -32,6 +32,10 @@ div.hotel {
   background-image:linear-gradient(blue -180%, white 80%);
 }
 
+.center {
+  text-align: center;
+}
+
 .right {
   float:right;
   padding-right: 3%;
