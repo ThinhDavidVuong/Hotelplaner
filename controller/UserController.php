@@ -2,6 +2,7 @@
 
 require_once '../repository/UserRepository.php';
 require_once '../repository/SexRepository.php';
+require_once '../lib/Validation.php';
 
 /**
  * Siehe Dokumentation im DefaultController.
@@ -19,7 +20,7 @@ class UserController
         $view->display();
     }
 
-    public function registery()
+    public function registery($fault = '')
     {
         $sexRepo = new SexRepository();
         $sexEntries = $sexRepo->readAll();
@@ -33,20 +34,23 @@ class UserController
         $view = new View('user_registery');
         $view->title = 'Registrieren';
         $view->heading = 'Registrieren';
+        $view->fault = $fault;
         $view->sexarray = $sexarray;
         $view->display();
     }
 
-    public function login()
+    public function login($fault = '')
     {
       $view = new View('user_login');
       $view->title = 'Login';
       $view->heading = 'Login';
+      $view->fault = $fault;
       $view->display();
     }
 
     public function doCreate()
     {
+        $validator = new Validation();
 
         if ($_POST['send']) {
             $sex = $_POST['sex'];
@@ -56,23 +60,53 @@ class UserController
             $password  = $_POST['password'];
             $passwordrepeat = $_POST['passwordrepeat'];
 
+            $checkString = '';
+
+            if (isset($sex) && isset($firstName) && isset($name)){
+              $checkString = 'Die Felder Geschlecht, Vorname und Nachname müssen ausgefühlt sein';
+            }
+
+            if (!$validator->isemail($email)){
+              $checkString .= 'Es muss eine gültige Emailadresse angegeben werden <br/>';
+            }
+
+            if (!$validator->minlengthchecker($password, 8)){
+              $checkString .= 'Das Passwort muss mindestens 8 Zeichen lang sein <br/>';
+            }
+
+            if ($password!=$passwordrepeat){
+              $checkString .= 'die Passwörter müssen übereinstimmen';
+            }
+
+            if (strlen($checkString) > 0){
+              $this->registery($checkString);
+            } else {
             $sexRepo = new SexRepository();
-            $sex_id = $sexRepo->getNameById($sex);
+            $sex_id = $sexRepo->getIdByName($sex);
 
             $userRepository = new UserRepository();
             $userRepository->create($sex_id, $firstName, $name, $email, $password);
+            $this->dologin();
+            header('Location: /');
+          }
         }
 
-        // Anfrage an die URI /user weiterleiten (HTTP 302)
-        header('Location: /user');
     }
 
-    public funktion dologin()
+    public function dologin()
     {
       if ($_POST['send']){
+        $userRepository = new UserRepository();
         $email = $_POST['email'];
         $password = $_POST['password'];
-        
+
+        if($userRepository->check($email, $password)){
+          $_SESSION['Userid'] = $userRepository->getIdByEmail($email);
+          header('Location: /');
+        } else {
+          $fault = 'Die E-Mail Adresse oder das Passwort ist falsch';
+          $this->login($fault);
+        }
       }
     }
 

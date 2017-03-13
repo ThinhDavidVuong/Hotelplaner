@@ -2,6 +2,7 @@
 
 $form = new Form('/user/doCreate');
 
+echo $form->fault()->message($fault);
 echo $form->dropdown()->label('Geschlecht')->name('sex')->options($sexarray);
 echo $form->text()->label('Vorname')->name('firstName');
 echo $form->text()->label('Nachname')->name('name');

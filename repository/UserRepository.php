@@ -77,6 +77,31 @@ class UserRepository extends Repository
           return False;
         }
     }
+  }
+
+    public function getIdByEmail($email)
+      {
+
+          $query = "SELECT id FROM {$this->tableName} WHERE email=?";
+
+          $statement = ConnectionHandler::getConnection()->prepare($query);
+          $statement->bind_param('s', $email);
+
+          $statement->execute();
+          $result = $statement->get_result();
+          if (!$result) {
+            throw new Exception($statement->error);
+          }
+
+          //return $resault->fetch_array();
+          // Ersten Datensatz aus dem Reultat holen
+          $row = $result->fetch_object();
+
+          // Datenbankressourcen wieder freigeben
+          $result->close();
+
+          // Den gefundenen Datensatz zurückgeben
+          return $row->id;
 
     }
 }
