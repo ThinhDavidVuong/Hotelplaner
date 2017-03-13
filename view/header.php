@@ -36,13 +36,19 @@
                       <div id="navbar" class="collapse navbar-collapse">
                           <ul class="nav nav-tabs">
                               <li><a href="/">Hotel</a></li>
-                              <li><a href="/user">Buchungen</a></li>
-                              <li><a href="/user/login">Login</a></li>
+                              <?php
+                              if(isset($_SESSION['Userid']))
+                              {
+                                echo "<li><a href=\"/user\">Buchungen</a></li>";
+                                echo "<li><a href=\"/user/comment\">Bewerten</a></li>";
+                                echo "<li><a href=\"/login/logout\">Logout</a></li>";
+                              } else {
+                                echo "<li><a href=\"/login/login\">Login</a></li>";
+                              }
+                              ?>
                           </ul>
                       </div><!--/.nav-collapse -->
                   </div>
               </nav>
       <div class="container">
 <!--          <h1>--><?//= $heading ?><!--</h1>-->
-
-

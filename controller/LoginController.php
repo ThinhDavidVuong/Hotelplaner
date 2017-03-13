@@ -7,7 +7,7 @@ require_once '../lib/Validation.php';
 /**
  * Siehe Dokumentation im DefaultController.
  */
-class UserController
+class LoginController
 {
     public function index()
     {
@@ -61,10 +61,10 @@ class UserController
             $passwordrepeat = $_POST['passwordrepeat'];
 
             $checkString = '';
-
-            if (isset($sex) && isset($firstName) && isset($name)){
-              $checkString = 'Die Felder Geschlecht, Vorname und Nachname müssen ausgefühlt sein';
-            }
+            /*
+            if (isset($_POST['sex']) && isset($_POST['firstName']) && isset($_POST['name'])){
+              $checkString = 'Die Felder Geschlecht, Vorname und Nachname müssen ausgefühlt sein <br/>';
+            }*/
 
             if (!$validator->isemail($email)){
               $checkString .= 'Es muss eine gültige Emailadresse angegeben werden <br/>';
@@ -85,7 +85,8 @@ class UserController
             $sex_id = $sexRepo->getIdByName($sex);
 
             $userRepository = new UserRepository();
-            $userRepository->create($sex_id, $firstName, $name, $email, $password);
+            $userRepository->create($sex_id, $firstName, $name, $password, $email);
+            //$_SESSION['Userid'] = $userRepository->getIdByEmail($email);
             $this->dologin();
             header('Location: /');
           }
@@ -102,12 +103,20 @@ class UserController
 
         if($userRepository->check($email, $password)){
           $_SESSION['Userid'] = $userRepository->getIdByEmail($email);
+          echo $_SESSION['Userid'];
           header('Location: /');
         } else {
           $fault = 'Die E-Mail Adresse oder das Passwort ist falsch';
           $this->login($fault);
         }
       }
+    }
+
+    public function logout(){
+      unset($_SESSION['Userid']);
+      unset($_SESSION['session_id']);
+      session_destroy();
+      header('Location: /');
     }
 
     public function delete()
