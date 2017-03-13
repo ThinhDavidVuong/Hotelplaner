@@ -1,10 +1,6 @@
 /**
  * Created by bvuond on 13.03.2017.
  */
-
-
-
-
 var elPrice = document.getElementById("price");
 elPrice.innerHTML = hotel.price;
 
@@ -24,10 +20,12 @@ var buchung = {
     zimmer: 0,
     personen: 0,
     optionen: 0,
-    tage: 0
+    tage: 1
 }
 
 function berechneBuchung() {
+    berechneDatum();
+
     elPrice.innerHTML = (hotel.price + buchung.zimmer + buchung.personen + buchung.optionen) * buchung.tage;
 }
 
@@ -104,15 +102,14 @@ function berechneDatum() {
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     buchung.tage= diffDays;
-    berechneBuchung();
 }
 
-monatStart.addEventListener('click', berechneDatum);
-tagStart.addEventListener('click', berechneDatum);
-jahrStart.addEventListener('click', berechneDatum);
-monatEnde.addEventListener('click', berechneDatum);
-tagEnde.addEventListener('click', berechneDatum);
-jahrEnde.addEventListener('click', berechneDatum);
+monatStart.addEventListener('click', berechneBuchung);
+tagStart.addEventListener('click', berechneBuchung);
+jahrStart.addEventListener('click', berechneBuchung);
+monatEnde.addEventListener('click', berechneBuchung);
+tagEnde.addEventListener('click', berechneBuchung);
+jahrEnde.addEventListener('click', berechneBuchung);
 
 
 

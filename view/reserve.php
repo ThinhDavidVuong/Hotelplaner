@@ -1,3 +1,11 @@
+<?php
+if(!isset($_SESSION['Userid'])){
+    header("Location: /");
+}
+
+$nextDate = strtotime('+1 day');
+?>
+
 <div>
     <h3 name="hotelname" class="center"> <?= $hotel->name; ?> </h3>
     <p name="stars" class="center"> <?php for ($x = 0; $x < $hotel->stars; $x++) : ?>&#9733<?php endfor; ?> </p><br>
@@ -48,14 +56,22 @@
         <label>Month</label>
         <select id="month-start" required/>
             <?php for ($i = 1; $i <= 12; $i++) : ?>
+                <?php if ($i == date('m')) : ?>
+                <option value="<?= $i ?>" selected><?= DateTime::createFromFormat('!m', $i)->format('F') ?></option>
+                <?php else : ?>
                 <option value="<?= $i ?>"><?= DateTime::createFromFormat('!m', $i)->format('F') ?></option>
+                <?php endif; ?>
             <?php endfor; ?>
         </select> -
 
         <label>Day</label>
         <select id="day-start" required/>
             <?php for ($i = 1; $i <= 31; $i++) : ?>
+                <?php if ($i == date('d')) : ?>
+                    <option value="<?= $i ?>" selected><?= $i ?></option>
+                <?php else: ?>
                 <option value="<?= $i ?>"><?= $i ?></option>
+                <?php endif ?>
             <?php endfor; ?>
         </select> -
 
@@ -65,21 +81,29 @@
             <option value="<?= date('Y', strtotime("+$i years")) ?>"><?= date('Y', strtotime("+$i years")) ?></option>
             <?php endfor; ?>
         </select>
-        <span class="inst">(Month-Day-Year)</span>
+        <span>(Month-Day-Year)</span>
         <br>
         <br>
         <h4>End Date </h4>
         <label>Month</label>
         <select id="month-end" required/>
-            <?php for ($i = 1; $i <= 12; $i++) : ?>
+        <?php for ($i = 1; $i <= 12; $i++) : ?>
+            <?php if ($i == date('m', $nextDate)) : ?>
+                <option value="<?= $i ?>" selected><?= DateTime::createFromFormat('!m', $i)->format('F') ?></option>
+            <?php else : ?>
                 <option value="<?= $i ?>"><?= DateTime::createFromFormat('!m', $i)->format('F') ?></option>
-            <?php endfor; ?>
+            <?php endif; ?>
+        <?php endfor; ?>
         </select> -
 
         <label>Day</label>
         <select id="day-end" required/>
             <?php for ($i = 1; $i <= 31; $i++) : ?>
-                <option value="<?= $i ?>"><?= $i ?></option>
+                <?php if ($i == date('d', $nextDate)) : ?>
+                    <option value="<?= $i ?>" selected><?= $i ?></option>
+                <?php else: ?>
+                    <option value="<?= $i ?>"><?= $i ?></option>
+                <?php endif ?>
             <?php endfor; ?>
         </select> -
 
@@ -89,7 +113,7 @@
                 <option value="<?= date('Y', strtotime("+$i years")) ?>"><?= date('Y', strtotime("+$i years")) ?></option>
             <?php endfor; ?>
         </select>
-        <span class="inst">(Month-Day-Year)</span>
+        <span>(Month-Day-Year)</span>
     </div>
 </div>
 
