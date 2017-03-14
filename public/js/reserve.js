@@ -4,11 +4,6 @@
 var elPrice = document.getElementById("price");
 elPrice.innerHTML = hotel.price;
 
-var chkFrühstück = document.getElementById("frühstück");
-var chkMittag = document.getElementById("mittag");
-var chkNachmittag = document.getElementById("nachmittag");
-var chkAbends = document.getElementById("abends");
-
 var monatStart = document.getElementById("month-start");
 var tagStart = document.getElementById("day-start");
 var jahrStart = document.getElementById("year-start");
@@ -25,7 +20,6 @@ var buchung = {
 
 function berechneBuchung() {
     berechneDatum();
-
     elPrice.innerHTML = (hotel.price + buchung.zimmer + buchung.personen + buchung.optionen) * buchung.tage;
 }
 
@@ -68,26 +62,17 @@ selectPersonen.addEventListener('change', function() {
 function berechneOptionen() {
     buchung.optionen = 0;
 
-    if (chkFrühstück.checked) {
-        buchung.optionen += 50;
-    }
-    if (chkMittag.checked) {
-        buchung.optionen += 50;
-    }
-    if (chkNachmittag.checked) {
-        buchung.optionen += 50;
-    }
-    if (chkAbends.checked) {
-        buchung.optionen += 50;
-    }
+    $('.meal').each(function(index, element) {
+        var price = $(this).attr('data-price');
 
+        if ($(this).is(':checked')) {
+            buchung.optionen = buchung.optionen + eval(price);
+        }
+    });
     berechneBuchung();
 }
 
-chkFrühstück.addEventListener('click', berechneOptionen);
-chkMittag.addEventListener('click', berechneOptionen);
-chkNachmittag.addEventListener('click', berechneOptionen);
-chkAbends.addEventListener('click', berechneOptionen);
+$('.meal').click(berechneOptionen);
 
 function berechneDatum() {
     buchung.tage = 0;

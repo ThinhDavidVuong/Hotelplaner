@@ -2,7 +2,6 @@
     <?php foreach ($hotels as $hotel) : ?>
         <div class="hotel-entry">
             <div class="hotel" style="background-image: url('<?= $hotel->image ?>')"></div>
-
             <div id="info" class="left">
                 <h3 name="hotelname"> <?= $hotel->name; ?> </h3><br>
                 <p name="stars"> <?php for ($x = 0; $x < $hotel->stars; $x++) : ?>&#9733<?php endfor; ?> </p><br>

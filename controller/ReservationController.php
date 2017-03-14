@@ -1,6 +1,8 @@
 <?php
 
 require_once '../repository/HotelRepository.php';
+require_once '../repository/MealRepository.php';
+require_once '../repository/ReservationRepository.php';
 
 /**
  * Der Controller ist der Ort an dem es für jede Seite, welche der Benutzer
@@ -27,37 +29,61 @@ require_once '../repository/HotelRepository.php';
 class ReservationController
 {
     /**
-     * Die index Funktion des DefaultControllers sollte in jedem Projekt
-     * existieren, da diese ausgeführt wird, falls die URI des Requests leer
-     * ist. (z.B. http://my-project.local/). Weshalb das so ist, ist und wann
-     * welcher Controller und welche Methode aufgerufen wird, ist im Dispatcher
-     * beschrieben.
-     */
-    public function index()
-    {
-        // In diesem Fall möchten wir dem Benutzer die View mit dem Namen
-        //   "default_index" rendern. Wie das genau funktioniert, ist in der
-        //   View Klasse beschrieben.
-        $view = new View('default_index');
-        $view->title = 'Startseite';
-        $view->heading = 'Startseite';
-
-        $hotelRepo = new HotelRepository();
-
-        $hotels = $hotelRepo->readAllWithProperties();
-        $view->hotels = $hotels;
-
-        $view->display();
-    }
-
-    /**
      * /hotel/reservation
      */
     public function reservation() {
+        $_SESSION['buchung'] = array();
+        $preis = 0;
+        $_SESSION['buchung']['hotel'] = $_POST["hotel_id"];
+        $_SESSION['buchung']['zimmer-typ'] = $_POST["zimmer-typ"];
+        $_SESSION['buchung']['anzahl-personen'] = $_POST["anzahl-personen"];
+        $_SESSION['buchung']['essen'] = $_POST["essen"];
+        $_SESSION['buchung']['preis'] = $preis;
+
+
+        $_SESSION['buchung']['month-start'] = $_POST["month-start"];
+        $_SESSION['buchung']['day-start'] = $_POST["day-start"];
+        $_SESSION['buchung']['year-start'] = $_POST["year-start"];
+        $_SESSION['buchung']['start-date'] = $_POST["year-start"]."-".$_POST["month-start"]."-".$_POST["day-start"];
+
+        $_SESSION['buchung']['month-end'] = $_POST["month-end"];
+        $_SESSION['buchung']['day-end'] = $_POST["day-end"];
+        $_SESSION['buchung']['year-end'] = $_POST["year-end"];
+        $_SESSION['buchung']['end-date'] = $_POST["year-end"]."-".$_POST["month-end"]."-".$_POST["day-end"];
+
+
+        $mealRepo = new MealRepository();
+        $meals = array();
+
+        foreach ($_SESSION['buchung']['essen'] as $essen) {
+            $meals[] = $mealRepo->readById($essen)->meal;
+        }
+
+
         $view = new View('reservation');
         $view->title = 'Startseite';
         $view->heading = 'Startseite';
 
+
+        $view->zimmer = $_SESSION['buchung']['zimmer-typ'];
+        $view->anzahlPersonen = $_SESSION['buchung']['anzahl-personen'];
+        $view->essen = $meals;
+        $view->preis = $_SESSION['buchung']['preis'];
+
+        $view->monthStart = $_SESSION['buchung']['month-start'];
+        $view->dayStart = $_SESSION['buchung']['day-start'];
+        $view->yearStart = $_SESSION['buchung']['year-start'];
+
+        $view->monthEnd = $_SESSION['buchung']['month-end'];
+        $view->dayEnd = $_SESSION['buchung']['day-end'];
+        $view->yearEnd = $_SESSION['buchung']['year-end'];
+
         $view->display();
+    }
+
+    public function commit() {
+        $reservationRepo = new ReservationRepository();
+        $reservation_id = $reservationRepo->insertReservation($_SESSION['Userid'], $_SESSION['buchung']['hotel'], $_SESSION['buchung']['zimmer-typ'],
+            $_SESSION['buchung']['start-date'], $_SESSION['buchung']['end-date'], $_SESSION['buchung']['preis'], $_SESSION['buchung']['anzahl-personen']);
     }
 }

@@ -24,6 +24,13 @@ div.hotel {
   float: left;
 }
 
+div.comment-box {
+  min-height: 110px;
+  width: 300px;
+  border: 1px solid #aaa;
+  padding: 5px;
+}
+
 .back {
   position: absolute;
   height: 100%;
@@ -53,13 +60,6 @@ div.hotel {
   padding: 5px;
 }
 
-div.comment-box {
-  min-height: 110px;
-  width: 300px;
-  border: 1px solid #aaa;
-  padding: 5px;
-}
-
 .hotel-entry {
   height: 200px;
   margin-bottom: 8%;
@@ -69,3 +69,4 @@ div.comment-box {
   min-width: 500px;
   min-height: 100px;
 }
+
