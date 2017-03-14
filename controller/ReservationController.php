@@ -82,19 +82,14 @@ class ReservationController
 
     public function meine_reservationen() {
         $reservationRepo = new ReservationRepository();
-        $hotel = $reservationRepo->readAllByUser($_GET['user_id']);
+        $hotel = $reservationRepo->readAllByUser($_SESSION['Userid']);
         $mealRepo = new MealRepository();
 
-        $view = new View('comment');
+        $view = new View('user_reservation');
         $view->title = 'Kommentare';
         $view->heading = 'Kommentare';
-        $view->user_id = $user_id;
-        $view->hotel_id = $hotel_id;
-        $view->user_id = $roomtype_id;
-        $view->hotel_id = $date_start;
-        $view->hotel_id = $date_end;
-        $view->user_id = $price;
-        $view->hotel_id = $persons;
+        $view->user_id = $_SESSION['Userid'];
+        $view->hotels = $hotels;
         $view->display();
     }
 
