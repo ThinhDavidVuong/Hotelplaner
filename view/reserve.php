@@ -18,9 +18,9 @@ $nextDate = strtotime('+1 day');
             <h4 class="list-group-item list-group-item-info">Art der unterbingung</h4><br>
             <select name="zimmer-typ" id="zimmer-typ" required>
                 <option>--</option>
-                <option value="Einzelzimmer">Einzelzimmer</option>
-                <option value="Doppelzimmer">Doppelzimmer</option>
-                <option value="Viererzimmer">Viererzimmer</option>
+                <?php foreach ($roomTypes as $room) : ?>
+                <option value="<?= $room->id ?>"><?= $room->roomtype ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 

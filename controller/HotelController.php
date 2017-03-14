@@ -3,6 +3,7 @@
 require_once '../repository/HotelRepository.php';
 require_once '../repository/CommentRepository.php';
 require_once '../repository/MealRepository.php';
+require_once '../repository/RoomTypeRepository.php';
 
 /**
  * Der Controller ist der Ort an dem es für jede Seite, welche der Benutzer
@@ -65,11 +66,15 @@ class HotelController
             $mealRepo = new MealRepository();
             $meals = $mealRepo->readAll();
 
+            $roomTypeRepo = new RoomTypeRepository();
+            $roomTypes = $roomTypeRepo->readAll();
+
             $view = new View('reserve');
             $view->title = 'Startseite';
             $view->heading = 'Startseite';
             $view->hotel = $hotel;
             $view->meals = $meals;
+            $view->roomTypes = $roomTypes;
 
             $view->display();
         } else {
@@ -97,3 +102,4 @@ class HotelController
       $view->display();
     }
 }
+
