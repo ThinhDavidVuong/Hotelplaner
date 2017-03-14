@@ -6,6 +6,7 @@ class textareaBuilder extends Builder
     {
         $this->addProperty('label');
         $this->addProperty('name');
+        $this->addProperty('value', null);
     }
 
     public function build()
@@ -14,8 +15,7 @@ class textareaBuilder extends Builder
         $result .= "    <label class=\"col-md-2 control-label\" for=\"textinput\">{$this->label}</label>";
         $result .= "    <br/>";
         $result .= '    <div class="col-md-4">';
-        $result .= "        <textarea name=\"{$this->name}\" class=\"form-control input-md commentarea\" required>";
-        $result .= "        </textarea>";
+        $result .= "        <textarea name=\"{$this->name}\" class=\"form-control input-md commentarea\" required>{$this->value}</textarea>";
         $result .= '    </div>';
         $result .= '</div>';
 

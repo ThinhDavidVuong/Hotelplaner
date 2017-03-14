@@ -18,10 +18,12 @@
     </div>
 </div>
 <?php
-  $form = new Form('/comment/rate');
 
-  echo $form->fault()->message('');
-  echo $form->textarea()->label('Kommentar');
-  echo $form->submit()->label('Senden')->name('send');
+
+  $form = new Form("/comment/sendcomment?hotel=$hotel->id");
+
+  echo $form->fault()->message($fault);
+  echo $form->textarea()->label('Kommentar')->name('content')->value($comment);
+  echo $form->submit()->label('Kommentar absenden')->name('send');
 
   $form->end();

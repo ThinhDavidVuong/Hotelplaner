@@ -47,5 +47,20 @@ class CommentRepository extends Repository
             return $rows;
         }
 
+    public function insert($user_id, $hotel_id, $content)
+      {
+
+          $query = "INSERT INTO $this->tableName (user_id, hotel_id, content) VALUES (?, ?, ?)";
+
+          $statement = ConnectionHandler::getConnection()->prepare($query);
+          $statement->bind_param('iis', $user_id, $hotel_id, $content);
+
+          if (!$statement->execute()) {
+              throw new Exception($statement->error);
+          }
+
+          return $statement->insert_id;
+    }
+
 
 }

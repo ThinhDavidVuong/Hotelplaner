@@ -2,6 +2,7 @@
 
 require_once '../repository/HotelRepository.php';
 require_once '../repository/CommentRepository.php';
+require_once '../lib/Validation.php';
 
 /**
  *
@@ -27,7 +28,7 @@ class CommentController
     }
   }
 
-  public function rate(){
+  public function rate($comment = '', $fault = ''){
       $hotelRepo = new HotelRepository();
       $hotel = $hotelRepo->readById($_GET['hotel']);
 
@@ -35,7 +36,31 @@ class CommentController
       $view->title = 'Bewertung';
       $view->heading = 'Bewertung';
       $view->hotel = $hotel;
+      $view->comment = $comment;
+      $view->fault = $fault;
       $view->display();
 
+  }
+
+  public function sendcomment(){
+    $validator = new Validation();
+    $comentrepo = new CommentRepository();
+
+    $hotel_id = $_GET['hotel'];
+    $content = $_POST['content'];
+    $user_id = $_SESSION['Userid'];
+
+
+    if(!empty($content) && is_string($content) && $validator->maxlengthchecker($content, 400)){
+      echo 1;
+        $content = htmlspecialchars($content);
+        $comentrepo->insert($user_id, $hotel_id, $content);
+        header("Location: /hotel/showcomments?hotel=$hotel_id");
+      } else {
+        echo 2;
+        $fault = 'Bei der Übermitlung ist ein fehler pasiert bitte senden sie den Kommentar erneut.';
+        $this->rate($content, $fault);
+      }
+      echo 3;
   }
 }

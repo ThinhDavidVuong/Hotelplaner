@@ -104,4 +104,24 @@ class UserRepository extends Repository
           return $row->id;
 
     }
+
+    public function getallEmails(){
+      $query = "SELECT email FROM {$this->tableName}";
+
+      $statement = ConnectionHandler::getConnection()->prepare($query);
+      $statement->execute();
+
+      $result = $statement->get_result();
+      if (!$result) {
+          throw new Exception($statement->error);
+      }
+
+      // Datensätze aus dem Resultat holen und in das Array $rows speichern
+      $rows = array();
+      while ($row = $result->fetch_object()) {
+          $rows[] = $row;
+      }
+
+      return $rows;
+    }
 }

@@ -17,15 +17,10 @@
         <div class="description-box"><?= $hotel->description; ?></div>
     </div>
 </div>
-    <?php foreach ($comments as $comment) : ?>
-      <div id="info" class="left">
-          <?php $fullname =  $comment->user->firstname;
-                $fullname .= "  ";
-                $fullname .= $comment->user->name; ?>
-          <h3 name="username"> <?= $fullname; ?> </h3><br>
-      </div>
-      <div class="right">
-          <h4>Kommentar</h4>
-          <div class="description-box"><?= $comment->content; ?></div>
-      </div>
-      <?php endforeach; ?>
+
+    <?php foreach ($comments as $comment){
+      $form = new Form("");
+      $name = $comment->user->name;
+      $name .= $comment->user->firstname;
+      echo $form->textarea()->label($name)->name('comment')->value($comment->content);
+    }

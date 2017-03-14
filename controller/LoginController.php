@@ -51,6 +51,8 @@ class LoginController
     public function doCreate()
     {
         $validator = new Validation();
+        $userRepository = new UserRepository();
+        $sexRepo = new SexRepository();
 
         if ($_POST['send']) {
             $sex = $_POST['sex'];
@@ -61,10 +63,17 @@ class LoginController
             $passwordrepeat = $_POST['passwordrepeat'];
 
             $checkString = '';
-            /*
-            if (isset($_POST['sex']) && isset($_POST['firstName']) && isset($_POST['name'])){
-              $checkString = 'Die Felder Geschlecht, Vorname und Nachname müssen ausgefühlt sein <br/>';
-            }*/
+            $emailcounter = 0;
+            $emails = $userRepository->getallEmails();
+            foreach ($emails as $emailDB) {
+              if($email == $emailDB->email){
+                $emailcounter ++;
+              }
+            }
+
+            if ($emailcounter > 0){
+              $checkString .= 'Die Emailadresse ist bereis vergeben <br/>';
+            }
 
             if (!$validator->isemail($email)){
               $checkString .= 'Es muss eine gültige Emailadresse angegeben werden <br/>';
@@ -81,10 +90,8 @@ class LoginController
             if (strlen($checkString) > 0){
               $this->registery($checkString);
             } else {
-            $sexRepo = new SexRepository();
             $sex_id = $sexRepo->getIdByName($sex);
 
-            $userRepository = new UserRepository();
             $userRepository->create($sex_id, $firstName, $name, $password, $email);
             //$_SESSION['Userid'] = $userRepository->getIdByEmail($email);
             $this->dologin();

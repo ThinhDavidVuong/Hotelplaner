@@ -24,6 +24,14 @@
         return False;
       }
     }
+
+    public function maxlengthchecker($var, $maxlength){
+      if(strlen($var) <= $maxlength){
+        return True;
+      } else {
+        return False;
+      }
+    }
   }
 
 ?>
