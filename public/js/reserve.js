@@ -25,15 +25,15 @@ function berechneBuchung() {
 
 var selectTyp = document.getElementById("zimmer-typ");
 selectTyp.addEventListener('change', function() {
-    if (selectTyp.value == 'einzelzimmer'){
+    if (selectTyp.value == '1'){
         buchung.zimmer = 0;
         berechneBuchung();
     }
-    if (selectTyp.value == 'doppelzimmer'){
+    if (selectTyp.value == '2'){
         buchung.zimmer = 150;
         berechneBuchung();
     }
-    if (selectTyp.value == 'viererzimmer'){
+    if (selectTyp.value == '3'){
         buchung.zimmer = 300;
         berechneBuchung();
     }
