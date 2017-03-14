@@ -53,8 +53,8 @@ class HotelController
     }
 
     /**
-     * /hotel/reserve
-     */
+        *Beim aufrufen der Funktion reserve wird eine neue Seite generiert auf welcher der User zusäzliche angeben zu seiner Buchung machen kann.
+    **/
     public function reserve() {
         if (isset($_GET['hotel']) && is_numeric($_GET['hotel'])) {
             $hotel_id = $_GET['hotel'];
@@ -76,6 +76,10 @@ class HotelController
             header("Location: /");
         }
     }
+
+    /**
+        *Beim aufrufen der Funktion showcomments werden alle Kommentare zum ausgewählten Hotel angezeigt.
+    **/
 
     public function showcomments() {
       $hotelRepo = new HotelRepository();

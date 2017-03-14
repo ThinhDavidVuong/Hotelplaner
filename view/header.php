@@ -40,7 +40,7 @@
                               if(isset($_SESSION['Userid']))
                               {
                                 echo "<li><a href=\"/reservation/reservation\">Buchungen</a></li>";
-                                echo "<li><a href=\"/comment/showhotels\">Bewerten</a></li>";
+                                echo "<li><a href=\"/comment/showhotels\">Hotel kommentieren</a></li>";
                                 echo "<li><a href=\"/login/logout\">Logout</a></li>";
                               } else {
                                 echo "<li><a href=\"/login/login\">Login</a></li>";

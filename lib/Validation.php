@@ -1,4 +1,5 @@
 <?php
+  //Die Klasse Validation wird dazu vererndet um heufige validierungen zusammenzufassen.
   class Validation
   {
     public function isint($int){
@@ -19,6 +20,14 @@
 
     public function minlengthchecker($var, $minlength){
       if(strlen($var) >= $minlength){
+        return True;
+      } else {
+        return False;
+      }
+    }
+
+    public function maxlengthchecker($var, $maxlength){
+      if(strlen($var) <= $maxlength){
         return True;
       } else {
         return False;

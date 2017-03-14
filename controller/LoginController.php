@@ -9,16 +9,10 @@ require_once '../lib/Validation.php';
  */
 class LoginController
 {
-    public function index()
-    {
-        $userRepository = new UserRepository();
-
-        $view = new View('user_index');
-        $view->title = 'Benutzer';
-        $view->heading = 'Benutzer';
-        $view->users = $userRepository->readAll();
-        $view->display();
-    }
+/**
+    *Die Funktion registery wir dazu verwendet die Seite Aufzubauen auf welcher ma sich registrieren kann.
+    * @param $fault wird dazu verwendet falls ein Fehler auftaucht diesen auszugeben
+**/
 
     public function registery($fault = '')
     {
@@ -38,6 +32,10 @@ class LoginController
         $view->sexarray = $sexarray;
         $view->display();
     }
+    /**
+        *Die Funktion login wir dazu verwendet die Seite Aufzubauen auf welcher ma sich einlogen kann.
+        * @param $fault wird dazu verwendet falls ein Fehler auftaucht diesen auszugeben
+    **/
 
     public function login($fault = '')
     {
@@ -47,10 +45,14 @@ class LoginController
       $view->fault = $fault;
       $view->display();
     }
-
+    /**
+        *Die Funktion doCreate wir dazu verwendet um die Registrationsdaten anzunehmen, zu validieren und zu speichern.
+    **/
     public function doCreate()
     {
         $validator = new Validation();
+        $userRepository = new UserRepository();
+        $sexRepo = new SexRepository();
 
         if ($_POST['send']) {
             $sex = $_POST['sex'];
@@ -60,11 +62,23 @@ class LoginController
             $password  = $_POST['password'];
             $passwordrepeat = $_POST['passwordrepeat'];
 
+            //Hier fängt die Validation an
             $checkString = '';
-            /*
-            if (isset($_POST['sex']) && isset($_POST['firstName']) && isset($_POST['name'])){
-              $checkString = 'Die Felder Geschlecht, Vorname und Nachname müssen ausgefühlt sein <br/>';
-            }*/
+            $emailcounter = 0;
+            $emails = $userRepository->getallEmails();
+            foreach ($emails as $emailDB) {
+              if($email == $emailDB->email){
+                $emailcounter ++;
+              }
+            }
+
+            if (!empty('$firstName') && !empty($name)){
+              $checkString .= 'Vorname und Name müssen angegeben sein <br/>';
+            }
+
+            if ($emailcounter > 0){
+              $checkString .= 'Die Emailadresse ist bereis vergeben <br/>';
+            }
 
             if (!$validator->isemail($email)){
               $checkString .= 'Es muss eine gültige Emailadresse angegeben werden <br/>';
@@ -78,21 +92,24 @@ class LoginController
               $checkString .= 'die Passwörter müssen übereinstimmen';
             }
 
+            //ist alles korrekt so ist auch der $checkString lehr und die daten können in die DB gespeichert werden.
+            //Andern Falls wird der Fehler ausgegeben.
             if (strlen($checkString) > 0){
               $this->registery($checkString);
             } else {
-            $sexRepo = new SexRepository();
             $sex_id = $sexRepo->getIdByName($sex);
 
-            $userRepository = new UserRepository();
             $userRepository->create($sex_id, $firstName, $name, $password, $email);
-            //$_SESSION['Userid'] = $userRepository->getIdByEmail($email);
             $this->dologin();
             header('Location: /');
           }
         }
 
     }
+
+    /**
+        *Die Funktion dologin prüft ob die eingegebene email und password übereinstimmen.
+    **/
 
     public function dologin()
     {
@@ -112,19 +129,15 @@ class LoginController
       }
     }
 
+    /**
+        *Über die Funktion logout wird die session beendet und man ist ausgelogt.
+    **/
+
+
     public function logout(){
       unset($_SESSION['Userid']);
       unset($_SESSION['session_id']);
       session_destroy();
       header('Location: /');
-    }
-
-    public function delete()
-    {
-        $userRepository = new UserRepository();
-        $userRepository->deleteById($_GET['id']);
-
-        // Anfrage an die URI /user weiterleiten (HTTP 302)
-        header('Location: /user');
     }
 }
