@@ -39,13 +39,8 @@
                               <?php
                               if(isset($_SESSION['Userid']))
                               {
-<<<<<<< HEAD
-                                echo "<li><a href=\"/user\">Buchungen</a></li>";
-                                echo "<li><a href=\"/comment/showhotels\">Bewerten</a></li>";
-=======
                                 echo "<li><a href=\"/reservation/reservation\">Buchungen</a></li>";
-                                echo "<li><a href=\"/user/comment\">Bewerten</a></li>";
->>>>>>> origin/master
+                                echo "<li><a href=\"/comment/showhotels\">Bewerten</a></li>";
                                 echo "<li><a href=\"/login/logout\">Logout</a></li>";
                               } else {
                                 echo "<li><a href=\"/login/login\">Login</a></li>";
