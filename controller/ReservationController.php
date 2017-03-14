@@ -33,12 +33,11 @@ class ReservationController
      */
     public function reservation() {
         $_SESSION['buchung'] = array();
-        $preis = 0;
         $_SESSION['buchung']['hotel'] = $_POST["hotel_id"];
         $_SESSION['buchung']['zimmer-typ'] = $_POST["zimmer-typ"];
         $_SESSION['buchung']['anzahl-personen'] = $_POST["anzahl-personen"];
         $_SESSION['buchung']['essen'] = $_POST["essen"];
-        $_SESSION['buchung']['preis'] = $preis;
+        $_SESSION['buchung']['preis'] = $_POST['price'];
 
 
         $_SESSION['buchung']['month-start'] = $_POST["month-start"];

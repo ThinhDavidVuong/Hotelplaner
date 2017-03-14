@@ -113,7 +113,7 @@ $nextDate = strtotime('+1 day');
     </div>
 
     <div class="left">
-        <label>Preis: </label> <span id="price"></span> CHF<br><br>
+        <label>Preis: <input id="price" name="price" type="text" value="" readonly> CHF</label><br><br>
         <button class="btn btn-info">Buchen</button>
     </div>
 </form>
