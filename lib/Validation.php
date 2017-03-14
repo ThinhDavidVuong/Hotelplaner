@@ -1,4 +1,5 @@
 <?php
+  //Die Klasse Validation wird dazu vererndet um heufige validierungen zusammenzufassen.
   class Validation
   {
     public function isint($int){

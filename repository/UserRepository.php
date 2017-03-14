@@ -21,10 +21,11 @@ class UserRepository extends Repository
      * Das Passwort wird vor dem ausführen des Queries noch mit dem SHA1
      *  Algorythmus gehashed.
      *
+     * @param $sex_id Wert für die Spalte sex
      * @param $firstName Wert für die Spalte firstName
-     * @param $lastName Wert für die Spalte lastName
-     * @param $email Wert für die Spalte email
+     * @param $Name Wert für die Spalte lastName
      * @param $password Wert für die Spalte password
+     * @param $email Wert für die Spalte email
      *
      * @throws Exception falls das Ausführen des Statements fehlschlägt
      */
@@ -43,6 +44,17 @@ class UserRepository extends Repository
 
         return $statement->insert_id;
     }
+
+    /**
+     * Diese Funktion prüft ob die Email und das Passwort zusammengehören.
+     *
+     * @param $email
+     * @param $password
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return True oder False; True wenn Email und password matchen.
+     **/
 
     public function check($email, $password)
     {
@@ -79,6 +91,16 @@ class UserRepository extends Repository
     }
   }
 
+  /**
+   * Diese Funktion giebt die id zu einem Email zurück
+   *
+   * @param $email Email zu welchem die id zurückgegeben werden soll.
+   *
+   * @throws Exception falls das Ausführen des Statements fehlschlägt
+   *
+   * @return id der gefundenen Objekts
+   **/
+
     public function getIdByEmail($email)
       {
 
@@ -104,6 +126,15 @@ class UserRepository extends Repository
           return $row->id;
 
     }
+
+
+    /**
+     * Diese Funktion gibt ein array mit allen Emails die in der DB sind zurück
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Array mit allen gefundenen Emails
+     **/
 
     public function getallEmails(){
       $query = "SELECT email FROM {$this->tableName}";

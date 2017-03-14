@@ -15,6 +15,15 @@ class SexRepository extends Repository
      */
     protected $tableName = 'sex';
 
+    /**
+     * Diese Funktion gibt die Id des angegebenen geschlechts zurück.
+     *
+     * @param $sex Bestimmt zu welchem Eintrag die Id zurückgegeben werden soll.
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Die Id des gefundenen Objekts
+     **/
     public function getIdByName($sex)
     {
 
@@ -37,6 +46,6 @@ class SexRepository extends Repository
         $result->close();
 
         // Den gefundenen Datensatz zurückgeben
-        return $row;
+        return $row->id;
     }
 }

@@ -16,6 +16,14 @@ class CommentRepository extends Repository
      */
     protected $tableName = 'comment';
 
+    /**
+    *Wird dazu verwerdet um alle Kommentare zu einem Hotel aus der DB zu holen
+    * @param $hotelid Id des Hotel zu welchem alle Kommentare augegeben werden sollen.
+    *
+    * @throws Exception falls das Ausführen des Statements fehlschlägt
+    *
+    * @return Ein array mit den gefundenen Datensätzen.
+    **/
     public function readByHotelid($hotelid)
         {
             // Query erstellen
@@ -47,6 +55,16 @@ class CommentRepository extends Repository
             return $rows;
         }
 
+        /**
+        *Wird dazu verwerdet um einen Kommentar in die DB einzuspeichern.
+        * @param $user_id Id des Users der den Kommentar erfasst hat.
+        * @param $hotel_id Id des Hotels zu welchem der Komentar erfasst werden soll.
+        * @param $content Inhalt des Kommentars.
+        *
+        * @throws Exception falls das Ausführen des Statements fehlschlägt
+        *
+        * @return Ein array mit den gefundenen Datensätzen.
+        **/
     public function insert($user_id, $hotel_id, $content)
       {
 

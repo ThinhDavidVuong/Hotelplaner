@@ -18,7 +18,7 @@ class HotelRepository extends Repository
 
     /**
      * Diese Funktion gibt ein array mit allen Datensätzen aus der Tabelle
-     * zurück.
+     * zurück, inklusive dazugehöriger Properties aus der Propertie-Tabelle.
      *
      * @param $max Wie viele Datensätze höchstens zurückgegeben werden sollen
      *               (optional. standard 100)
@@ -51,6 +51,15 @@ class HotelRepository extends Repository
         return $rows;
     }
 
+    /**
+     * Überschriebt die Funktion readById der Repository-Klasse. Gibt ein Objekt inklusive dessen Properties zurück.
+     *
+     * @param $id Gibt an welches Hotel zurückgegeben werden soll.
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Ein Objekt mit dem gefundenen Datensatz.
+     */
     public function readById($id)
     {
         // Query erstellen
