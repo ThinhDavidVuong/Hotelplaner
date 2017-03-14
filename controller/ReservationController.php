@@ -81,9 +81,29 @@ class ReservationController
         $view->display();
     }
 
+    public function meine_reservationen() {
+        $reservationRepo = new ReservationRepository();
+        $hotel = $reservationRepo->readAllByUser($_GET['user_id']);
+        $mealRepo = new MealRepository();
+
+        $view = new View('comment');
+        $view->title = 'Kommentare';
+        $view->heading = 'Kommentare';
+        $view->user_id = $user_id;
+        $view->hotel_id = $hotel_id;
+        $view->user_id = $roomtype_id;
+        $view->hotel_id = $date_start;
+        $view->hotel_id = $date_end;
+        $view->user_id = $price;
+        $view->hotel_id = $persons;
+        $view->display();
+    }
+
     public function commit() {
         $reservationRepo = new ReservationRepository();
         $reservation_id = $reservationRepo->insertReservation($_SESSION['Userid'], $_SESSION['buchung']['hotel'], $_SESSION['buchung']['zimmer-typ'],
             $_SESSION['buchung']['start-date'], $_SESSION['buchung']['end-date'], $_SESSION['buchung']['preis'], $_SESSION['buchung']['anzahl-personen']);
+
+        header("Location: /reservation/meine_reservationen");
     }
 }

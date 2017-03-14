@@ -19,7 +19,7 @@ $nextDate = strtotime('+1 day');
             <select name="zimmer-typ" id="zimmer-typ" required>
                 <option>--</option>
                 <?php foreach ($roomTypes as $room) : ?>
-                <option value="<?= $room->id ?>"><?= $room->roomtype ?></option>
+                <option value="<?= $room->id ?>" class="room" data-price="<?= $room->price ?>"><?= $room->roomtype ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

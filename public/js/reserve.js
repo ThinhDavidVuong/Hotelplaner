@@ -23,21 +23,14 @@ function berechneBuchung() {
     elPrice.innerHTML = (hotel.price + buchung.zimmer + buchung.personen + buchung.optionen) * buchung.tage;
 }
 
-var selectTyp = document.getElementById("zimmer-typ");
-selectTyp.addEventListener('change', function() {
-    if (selectTyp.value == '1'){
-        buchung.zimmer = 0;
-        berechneBuchung();
-    }
-    if (selectTyp.value == '2'){
-        buchung.zimmer = 150;
-        berechneBuchung();
-    }
-    if (selectTyp.value == '3'){
-        buchung.zimmer = 300;
-        berechneBuchung();
-    }
+$('#zimmer-typ').change(function() {
+
+    var price = $("#zimmer-typ").find(":selected").attr('data-price');
+    buchung.zimmer = eval(price);
+
+    berechneBuchung();
 });
+
 
 var selectPersonen = document.getElementById("anzahl-personen");
 selectPersonen.addEventListener('change', function() {
