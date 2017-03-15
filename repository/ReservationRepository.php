@@ -85,4 +85,46 @@ class ReservationRepository extends Repository
 
           return $rows;
     }
+
+    /**
+     * Diese Funktion gibt den Datensatz mit der gegebenen id zurück.
+     * Diese Funktion gibt ausserdem noch alle dazugehörigen Mahlzeiten zurück.
+     *
+     * @param $id id des gesuchten Datensatzes
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Der gesuchte Datensatz oder null, sollte dieser nicht existieren.
+     */
+    public function readById($id)
+    {
+        // Query erstellen
+        $query = "SELECT r.id as id, hotel_id, date_start, date_end, roomtype, r.price as price, persons FROM {$this->tableName} as r join hotel as h on r.hotel_id=h.id join roomtype as ro on r.roomtype_id=ro.id  WHERE r.id = ?";
+
+        // Datenbankverbindung anfordern und, das Query "preparen" (vorbereiten)
+        // und die Parameter "binden"
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('i', $id);
+
+        // Das Statement absetzen
+        $statement->execute();
+
+        // Resultat der Abfrage holen
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+
+        // Ersten Datensatz aus dem Reultat holen
+        $row = $result->fetch_object();
+
+        // Damit werden die Mahlzeiten angehängt.
+        $row->meals = $this->readAllMealsOfAReservation($row->id);
+
+        // Datenbankressourcen wieder freigeben
+        $result->close();
+
+        // Den gefundenen Datensatz zurückgeben
+        return $row;
+    }
 }

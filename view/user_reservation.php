@@ -35,7 +35,11 @@
             <label>Buchungssumme</label>
             <p> $hotel->price CHF</p>
         </div>
-        <br>
+        <div class=\"left\">
+            <a href=\"/reservation/del?id=$hotel->id\" class=\"btn btn-info btn-md\">
+                <span class=\"glyphicon glyphicon-cog\"></span> Löschen
+            </a>
+        </div>
         <br>
     </div>
     <br/>";

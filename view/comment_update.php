@@ -16,18 +16,13 @@
         <div class="description-box"><?= $hotel->description; ?></div>
     </div>
 </div>
+<?php
 
-    <?php foreach ($comments as $comment){
-      $form = new Form("");
-      $name = $comment->user->name;
-      $name .= $comment->user->firstname;
-      echo $form->textarea()->label($name)->name('comment')->value($comment->content);
 
-      if(isset($_SESSION['Userid'])){
-        if($comment->user_id == $_SESSION['Userid']){
-          $hotel_id = $_GET['hotel'];
-            echo $form->linkbutton()->label('Ändern')->name('update')->onclick("/comment/update?id=$comment->id&hotel=$hotel_id");
-        }
-    }
-    $form->end();
-    }
+  $form = new Form("/comment/doupdate?hotel=$hotel->id&comment=$comment->id");
+
+  echo $form->fault()->message($fault);
+  echo $form->textarea()->label('Kommentar')->name('content')->value($comment->content);
+  echo $form->submit()->label('Kommentar absenden')->name('send');
+
+  $form->end();

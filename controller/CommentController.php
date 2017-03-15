@@ -72,4 +72,43 @@ class CommentController
         $this->rate($content, $fault);
       }
   }
+
+  public function update($comment = '', $fault = ''){
+    $hotelRepo = new HotelRepository();
+    $hotel = $hotelRepo->readById($_GET['hotel']);
+
+    if($comment == ''){
+      $commentReop = new CommentRepository();
+      $comment = $commentReop->readById($_GET['id']);
+    }
+
+    $view = new View('comment_update');
+    $view->title = 'Bewertung ändern';
+    $view->heading = 'Bewertung ändern';
+    $view->hotel = $hotel;
+    $view->comment = $comment;
+    $view->fault = $fault;
+    $view->display();
+
+  }
+
+  public function doupdate(){
+    $validator = new Validation();
+    $comentrepo = new CommentRepository();
+
+    $hotel_id = $_GET['hotel'];
+    $comment_id = $_GET['comment'];
+    $content = $_POST['content'];
+    $user_id = $_SESSION['Userid'];
+
+
+    if(!empty($content) && is_string($content) && $validator->maxlengthchecker($content, 400)){
+        $content = htmlspecialchars($content);
+        $comentrepo->update($comment_id, $content);
+        header("Location: /hotel/showcomments?hotel=$hotel_id");
+      } else {
+        $fault = 'Bei der Übermitlung ist ein fehler pasiert bitte senden sie den Kommentar erneut.';
+        $this->rate($content, $fault);
+      }
+  }
 }

@@ -28,4 +28,23 @@ class Reservation_has_MealsRepository extends Repository
         }
     }
 
+    /**
+     * Diese Funktion löscht den Datensatz mit der gegebenen reservation_id.
+     *
+     * @param $id id des zu löschenden Datensatzes
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     */
+    public function deleteById($reservation_id)
+    {
+        $query = "DELETE FROM {$this->tableName} WHERE reservation_id=?";
+
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('i', $reservation_id);
+
+        if (!$statement->execute()) {
+            throw new Exception($statement->error);
+        }
+    }
+
 }

@@ -88,18 +88,24 @@ class ReservationController
         $view->display();
     }
 
+
+
     public function meine_reservationen() {
         $reservationRepo = new ReservationRepository();
         $hotels = $reservationRepo->readAllByUser($_SESSION['Userid']);
         $mealRepo = new MealRepository();
 
         $view = new View('user_reservation');
-        $view->title = 'Kommentare';
-        $view->heading = 'Kommentare';
+        $view->title = 'Buchungen';
+        $view->heading = 'Buchungen';
         $view->user_id = $_SESSION['Userid'];
         $view->hotels = $hotels;
         $view->display();
     }
+
+    /**
+    * Dese Funktion speichert alles was für eine Rerservation benötigt wird.
+    **/
 
     public function commit() {
         $reservationRepo = new ReservationRepository();
@@ -110,7 +116,23 @@ class ReservationController
               $reservation_has_mealsRepo->insert($reservation_id, $meal->id);
             }
 
-
         header("Location: /reservation/meine_reservationen");
     }
+
+    /**
+    * Dese Funktion löscht alles was für eine Rerservation benötigt wird.
+    **/
+
+    public function del(){
+      $reservationRepo = new ReservationRepository();
+      $reservation_has_mealsRepo = new Reservation_has_MealsRepository();
+      $id = $_GET['id'];
+
+      $reservationRepo->deleteById($id);
+      $reservation_has_mealsRepo->deleteById($id);
+      header('Location: /reservation/meine_reservationen');
+    }
+
+
+
 }

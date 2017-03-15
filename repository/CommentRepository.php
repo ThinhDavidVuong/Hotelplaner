@@ -80,5 +80,28 @@ class CommentRepository extends Repository
           return $statement->insert_id;
     }
 
+    /**
+    *Wird dazu verwerdet um einen Kommentar in der DB zu verändern.
+    * @param $id Id des zu verändernden Kommentars.
+    * @param $content Inhalt des Kommentars.
+    *
+    * @throws Exception falls das Ausführen des Statements fehlschlägt
+    *
+    * @return Ein array mit den gefundenen Datensätzen.
+    **/
+
+    public function update($id, $content){
+
+      $query = "UPDATE $this->tableName SET content = ? WHERE id = ?";
+
+      $statement = ConnectionHandler::getConnection()->prepare($query);
+      $statement->bind_param('si', $content, $id);
+
+      if (!$statement->execute()) {
+          throw new Exception($statement->error);
+      }
+
+    }
+
 
 }
