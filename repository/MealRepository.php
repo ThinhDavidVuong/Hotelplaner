@@ -1,7 +1,6 @@
 <?php
 
 require_once '../lib/Repository.php';
-require_once 'UserRepository.php';
 
 /**
  * Das UserRepository ist zuständig für alle Zugriffe auf die Tabelle "user".
@@ -15,5 +14,7 @@ class MealRepository extends Repository
      * Funktionen zur Verfügung zu stellen.
      */
     protected $tableName = 'meal';
+
+
 
 }

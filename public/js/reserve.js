@@ -2,7 +2,7 @@
  * Created by bvuond on 13.03.2017.
  */
 var elPrice = document.getElementById("price");
-elPrice.innerHTML = hotel.price;
+elPrice.value = hotel.price;
 
 var monatStart = document.getElementById("month-start");
 var tagStart = document.getElementById("day-start");
@@ -20,7 +20,7 @@ var buchung = {
 
 function berechneBuchung() {
     berechneDatum();
-    elPrice.innerHTML = (hotel.price + buchung.zimmer + buchung.personen + buchung.optionen) * buchung.tage;
+    elPrice.value = (hotel.price + buchung.zimmer + buchung.personen + buchung.optionen) * buchung.tage;
 }
 
 $('#zimmer-typ').change(function() {
@@ -88,6 +88,3 @@ jahrStart.addEventListener('click', berechneBuchung);
 monatEnde.addEventListener('click', berechneBuchung);
 tagEnde.addEventListener('click', berechneBuchung);
 jahrEnde.addEventListener('click', berechneBuchung);
-
-
-

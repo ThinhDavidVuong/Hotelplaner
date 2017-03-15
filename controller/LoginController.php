@@ -72,7 +72,7 @@ class LoginController
               }
             }
 
-            if (!empty('$firstName') && !empty($name)){
+            if (empty($firstName) && empty($name)){
               $checkString .= 'Vorname und Name müssen angegeben sein <br/>';
             }
 
