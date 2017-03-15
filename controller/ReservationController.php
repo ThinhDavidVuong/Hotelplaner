@@ -120,7 +120,7 @@ class ReservationController
               $reservation_has_mealsRepo->insert($reservation_id, $meal->id);
             }
 
-        header("Location: /reservation/meine_reservationen");
+        header("Location: /reservation/myreservations");
     }
 
     /**
@@ -132,9 +132,9 @@ class ReservationController
       $reservation_has_mealsRepo = new Reservation_has_MealsRepository();
       $id = $_GET['id'];
 
-      $reservationRepo->deleteById($id);
       $reservation_has_mealsRepo->deleteById($id);
-      header('Location: /reservation/meine_reservationen');
+      $reservationRepo->deleteById($id);
+      header('Location: /reservation/myreservations');
     }
 
 
