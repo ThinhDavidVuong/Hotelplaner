@@ -12,6 +12,10 @@ class Reservation_has_MealsRepository extends Repository
     /**
      * Diese Variable wird von der Klasse Repository verwendet, um generische
      * Funktionen zur Verfügung zu stellen.
+     *@param $reservation_id id der Reservation
+     *@param $meal_id id der Mahlzeit
+     *
+     *@throws Exception falls das Ausführen des Statements fehlschlägt
      */
     protected $tableName = 'reservation_has_meals';
 

@@ -41,7 +41,7 @@ class HotelController
         // In diesem Fall möchten wir dem Benutzer die View mit dem Namen
         //   "default_index" rendern. Wie das genau funktioniert, ist in der
         //   View Klasse beschrieben.
-        $view = new View('default_index');
+        $view = new View('hotel_index');
         $view->title = 'Startseite';
         $view->heading = 'Startseite';
 
@@ -69,7 +69,7 @@ class HotelController
             $roomTypeRepo = new RoomTypeRepository();
             $roomTypes = $roomTypeRepo->readAll();
 
-            $view = new View('reserve');
+            $view = new View('hotel_reserve');
             $view->title = 'Startseite';
             $view->heading = 'Startseite';
             $view->hotel = $hotel;
@@ -94,7 +94,7 @@ class HotelController
       $allComments = $commentRepo->readByHotelid($_GET['hotel']);
 
 
-      $view = new View('comment');
+      $view = new View('hotel_showcomment');
       $view->title = 'Kommentare';
       $view->heading = 'Kommentare';
       $view->hotel = $hotel;
@@ -102,4 +102,3 @@ class HotelController
       $view->display();
     }
 }
-

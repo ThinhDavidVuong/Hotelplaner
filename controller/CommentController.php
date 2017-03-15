@@ -16,7 +16,7 @@ class CommentController
 
   public function showhotels(){
     {
-        $view = new View('comment_hotel');
+        $view = new View('comment_showhotels');
         $view->title = 'Bewertung';
         $view->heading = 'Bewertung';
 
@@ -73,6 +73,11 @@ class CommentController
       }
   }
 
+  /**
+  *Diese Funktion erstellt ein fenster auf welchem ein eintrag geladen wird und verändert werden kann.
+  **/
+
+
   public function update($comment = '', $fault = ''){
     $hotelRepo = new HotelRepository();
     $hotel = $hotelRepo->readById($_GET['hotel']);
@@ -91,6 +96,10 @@ class CommentController
     $view->display();
 
   }
+
+  /**
+  *Diese Funktion Prüfft ob etwas eingegeben worden ist und updated anschliessend diesen Kommentar in der DB.
+  */
 
   public function doupdate(){
     $validator = new Validation();

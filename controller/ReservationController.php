@@ -30,7 +30,7 @@ require_once '../repository/Reservation_has_MealsRepository.php';
 class ReservationController
 {
     /**
-     * /hotel/reservation
+     * Diese Funktion öffnet ein Fenster, in dem der User seine Buchung nocheinmal überprüfen kann.
      */
     public function reservation() {
         $_SESSION['buchung'] = array();
@@ -67,7 +67,7 @@ class ReservationController
         $_SESSION['buchung']['meals'] = $meals2;
 
 
-        $view = new View('reservation');
+        $view = new View('reservation_reservation');
         $view->title = 'Startseite';
         $view->heading = 'Startseite';
 
@@ -89,13 +89,17 @@ class ReservationController
     }
 
 
+    /**
+    * Diese Funktion öffnet ein Fenster indem zu einem Hotel alle Kommentare angezeigt werden.
+    **/
 
-    public function meine_reservationen() {
+
+    public function myreservations() {
         $reservationRepo = new ReservationRepository();
         $hotels = $reservationRepo->readAllByUser($_SESSION['Userid']);
         $mealRepo = new MealRepository();
 
-        $view = new View('user_reservation');
+        $view = new View('reservation_myreservations');
         $view->title = 'Buchungen';
         $view->heading = 'Buchungen';
         $view->user_id = $_SESSION['Userid'];

@@ -25,7 +25,7 @@ class LoginController
             $sexarray[] = $sex->sex;
         }
 
-        $view = new View('user_registery');
+        $view = new View('login_registery');
         $view->title = 'Registrieren';
         $view->heading = 'Registrieren';
         $view->fault = $fault;
@@ -39,7 +39,7 @@ class LoginController
 
     public function login($fault = '')
     {
-      $view = new View('user_login');
+      $view = new View('login_login');
       $view->title = 'Login';
       $view->heading = 'Login';
       $view->fault = $fault;
@@ -132,8 +132,6 @@ class LoginController
     /**
         *Über die Funktion logout wird die session beendet und man ist ausgelogt.
     **/
-
-
     public function logout(){
       unset($_SESSION['Userid']);
       unset($_SESSION['session_id']);

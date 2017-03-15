@@ -15,6 +15,22 @@ class ReservationRepository extends Repository
      */
     protected $tableName = 'reservation';
 
+    /**
+     * Diese Funktion fügt eine Buchung in die DB ein.
+     *
+     * @param $user_id Die id des Users
+     * @param $hotel_id Die id des Hotels
+     * @param $roomtype_id Die id des Rautyps
+     * @param $date_start Startdatum
+     * @param $date_end Enddatum
+     * @param $price Preis der Buchung
+     * @param $persons wie viele Personen
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Die id des insertstatments.
+     **/
+
     public function insertReservation($user_id, $hotel_id, $roomtype_id, $date_start, $date_end, $price, $persons) {
 
         $query = "INSERT INTO {$this->tableName} (user_id, hotel_id, roomtype_id, date_start, date_end, price, persons)
@@ -29,6 +45,22 @@ class ReservationRepository extends Repository
 
         return $statement->insert_id;
     }
+
+    /**
+     * Diese Funktion gibt alle Buchungen eines Users zurück.
+     *
+     * @param $user_id Die id des Users
+     * @param $hotel_id Die id des Hotels
+     * @param $roomtype_id Die id des Rautyps
+     * @param $date_start Startdatum
+     * @param $date_end Enddatum
+     * @param $price Preis der Buchung
+     * @param $persons wie viele Personen
+     *
+     * @throws Exception falls das Ausführen des Statements fehlschlägt
+     *
+     * @return Die id des insertstatments.
+     **/
 
     public function readAllByUser($user_id) {
 

@@ -21,7 +21,7 @@
       $form = new Form("");
       $name = $comment->user->name;
       $name .= $comment->user->firstname;
-      echo $form->textarea()->label($name)->name('comment')->value($comment->content);
+      echo $form->textarea()->label($name)->name('comment')->value($comment->content)->readonly('readonly');
 
       if(isset($_SESSION['Userid'])){
         if($comment->user_id == $_SESSION['Userid']){
