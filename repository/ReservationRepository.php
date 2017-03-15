@@ -32,7 +32,7 @@ class ReservationRepository extends Repository
 
     public function readAllByUser($user_id) {
 
-        $query = "SELECT r.id as id, hotel_id, date_start, date_end, roomtype, persons FROM {$this->tableName} as r join hotel as h on r.hotel_id=h.id join roomtype as ro on h.roomtype_id=ro.id  WHERE r.user_id = ?";
+        $query = "SELECT r.id as id, hotel_id, date_start, date_end, roomtype, r.price as price, persons FROM {$this->tableName} as r join hotel as h on r.hotel_id=h.id join roomtype as ro on r.roomtype_id=ro.id  WHERE r.user_id = ?";
 
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->bind_param('i', $user_id);
@@ -46,7 +46,7 @@ class ReservationRepository extends Repository
         // Datensätze aus dem Resultat holen und in das Array $rows speichern
         $rows = array();
         while ($row = $result->fetch_object()) {
-            $row->meals = readAllMealsOfAReservation($row->id);
+            $row->meals = $this->readAllMealsOfAReservation($row->id);
             $rows[] = $row;
         }
 
@@ -65,7 +65,8 @@ class ReservationRepository extends Repository
      * @return Ein Array mit allen meals die gefunden wurden.
      **/
     public function readAllMealsOfAReservation($id){
-          $query = "SELECT * FROM {$this->tableName} as r join reservation_has_meals as rm on r.id = rm.reservation_id join meal as m on rm.meal_id=m.id WHERE r.id = ?";
+
+          $query = "SELECT r.id as id, m.meal as meal FROM {$this->tableName} as r join reservation_has_meals as rm on r.id = rm.reservation_id join meal as m on rm.meal_id=m.id WHERE r.id = ?";
 
           $statement = ConnectionHandler::getConnection()->prepare($query);
           $statement->bind_param('i', $id);

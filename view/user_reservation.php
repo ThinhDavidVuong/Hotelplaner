@@ -1,14 +1,19 @@
 <?php
+
   foreach($hotels as $hotel){
+    $essenout = '';
+    foreach ($hotel->meals as $meal) {
+      $essenout .= $meal->meal."<br>";
+    }
     echo "<div>
         <div class=\"left\">
             <label>Anreise</label>
-            <p>$hotel->start_date</p>
+            <p>$hotel->date_start</p>
         </div>
 
         <div class=\"left\">
             <label>Abreise</label>
-            <p>$hotel->end_date</p>
+            <p>$hotel->date_end</p>
         </div>
 
         <div class=\"left\">
@@ -23,16 +28,15 @@
 
         <div class=\"left\">
             <label>Mahlzeiten</label>
-            <p>  <?php
-                $length = count($essen);
-                for ($i = 0; $i < $length; $i++) { echo $essen[$i]."<br>"; } ?></p>
+            <p>$essenout</p>
         </div>
 
         <div class=\"left\">
             <label>Buchungssumme</label>
-            <p> $preis CHF</p>
+            <p> $hotel->price CHF</p>
         </div>
         <br>
         <br>
-    </div>";
+    </div>
+    <br/>";
   }

@@ -3,6 +3,7 @@
 require_once '../repository/HotelRepository.php';
 require_once '../repository/MealRepository.php';
 require_once '../repository/ReservationRepository.php';
+require_once '../repository/Reservation_has_MealsRepository.php';
 
 /**
  * Der Controller ist der Ort an dem es für jede Seite, welche der Benutzer
@@ -53,10 +54,17 @@ class ReservationController
 
         $mealRepo = new MealRepository();
         $meals = array();
+        $meals2 = array();
 
         foreach ($_SESSION['buchung']['essen'] as $essen) {
             $meals[] = $mealRepo->readById($essen)->meal;
         }
+
+
+        foreach ($_SESSION['buchung']['essen'] as $essen) {
+            $meals2[] = $mealRepo->readById($essen);
+        }
+        $_SESSION['buchung']['meals'] = $meals2;
 
 
         $view = new View('reservation');
@@ -82,7 +90,7 @@ class ReservationController
 
     public function meine_reservationen() {
         $reservationRepo = new ReservationRepository();
-        $hotel = $reservationRepo->readAllByUser($_SESSION['Userid']);
+        $hotels = $reservationRepo->readAllByUser($_SESSION['Userid']);
         $mealRepo = new MealRepository();
 
         $view = new View('user_reservation');
@@ -95,8 +103,13 @@ class ReservationController
 
     public function commit() {
         $reservationRepo = new ReservationRepository();
+        $reservation_has_mealsRepo = new Reservation_has_MealsRepository();
         $reservation_id = $reservationRepo->insertReservation($_SESSION['Userid'], $_SESSION['buchung']['hotel'], $_SESSION['buchung']['zimmer-typ'],
             $_SESSION['buchung']['start-date'], $_SESSION['buchung']['end-date'], $_SESSION['buchung']['preis'], $_SESSION['buchung']['anzahl-personen']);
+            foreach ($_SESSION['buchung']['meals'] as $meal) {
+              $reservation_has_mealsRepo->insert($reservation_id, $meal->id);
+            }
+
 
         header("Location: /reservation/meine_reservationen");
     }
