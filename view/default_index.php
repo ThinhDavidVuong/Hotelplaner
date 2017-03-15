@@ -8,6 +8,7 @@
               <?php if (isset($_SESSION['Userid'])) {
                   echo "<a href=\"/hotel/reserve?hotel=$hotel->id\" class=\"btn btn-info\">Buchen</a>";
                 }  ?>
+                <br><br>
                 <a href="/hotel/showcomments?hotel=<?= $hotel->id ?>" class="btn btn-info">Kommentare</a>
             </div>
 
